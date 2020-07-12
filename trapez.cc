@@ -45,6 +45,12 @@ std::vector<std::vector<double>> romberg(std::vector<double> I) {
   for (int k = 0; k <= N; ++k) {
     R[k].push_back(I[k]);
   }
+  for (int n=1; n<=N; ++n) {
+    for (int k = 0; k < N-(n-1) ; ++k) {
+      double extr = R[k+1][n-1] + (R[k+1][n-1]-R[k][n-1])/(pow(2,2*n)-1);
+      R[k].push_back(extr);
+    }
+  }
   return R;
 }
 
@@ -66,7 +72,7 @@ void testeAufgabe1() {
   std::cout << "A1: Richardson : " << rich << " : " << (rich == -1.5 ? "ja " : "nein") << std::endl;
 
 }
-/*
+
 void testeAufgabe2() {
   Pol1 f;
   std::vector<std::vector<double>> Rf = romberg(trapez(f, 0, 3, 3));
@@ -84,7 +90,7 @@ void testeAufgabe2() {
   std::vector<std::vector<double>> Rg = romberg(trapez(g, 0, 3, 3));
   std::cout << "A2: R[1][1] und R[2][1] für g gleich -1.5: " << ((Rg[1][1] == -1.5) && (Rg[2][1] == -1.5) ? " ja " : " nein") << std::endl;
 }
-*/
+
 
 int main() {
   // Testfunktion:
@@ -109,6 +115,6 @@ int main() {
   }
 
   testeAufgabe1();
-  // testeAufgabe2();
+  testeAufgabe2();
 
 }
